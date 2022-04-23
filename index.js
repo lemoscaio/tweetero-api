@@ -5,6 +5,7 @@ import fetch from "node-fetch";
 const app = express();
 app.use(express.json());
 app.use(cors());
+// app.set("query parser", "simple")
 
 // const users = [];
 const users = [
@@ -114,10 +115,10 @@ app.get("/tweets", (req, res) => {
 app.post("/tweets", (req, res) => {
     const body = req.body;
 
-    if (!body.username || !body.tweet) {
+    if (!body.tweet) {
         res.status(400).send("Todos os campos são obrigatórios!");
     } else {
-        const user = users.find((user) => user.username === req.body.username);
+        const user = users.find((user) => user.username === req.header("User"));
         const newTweet = {
             username: user.username,
             avatar: user.avatar,
