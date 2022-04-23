@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import fetch from "node-fetch";
 
 const app = express();
 app.use(express.json());
@@ -22,23 +23,84 @@ const tweets = [
     {
         username: "bobesponja",
         avatar: "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info",
-        tweet: "eu amo o hub",
+        tweet: "eu amo o hub2",
     },
     {
         username: "lemoscaio",
         avatar: "https://avatars.githubusercontent.com/u/74937642?v=4",
-        tweet: "eu amo o hub",
+        tweet: "eu amo o hub3",
+    },
+    {
+        username: "usuario1",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet4",
+    },
+    {
+        username: "usuario2",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet5",
+    },
+    {
+        username: "usuario3",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet6",
+    },
+    {
+        username: "usuario4",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet7",
+    },
+    {
+        username: "usuario5",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet8",
+    },
+    {
+        username: "usuario6",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet9",
+    },
+    {
+        username: "usuario7",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet10",
+    },
+    {
+        username: "usuario8",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet11",
+    },
+    {
+        username: "usuario9",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet12",
+    },
+    {
+        username: "usuario10",
+        avatar: "https://picsum.photos/200/300",
+        tweet: "tweet13",
     },
 ];
 
 app.post("/sign-up", (req, res) => {
     const body = req.body;
-    const newUser = {
-        username: body.username,
-        avatar: body.avatar,
-    };
-    users.push(newUser);
-    res.send("Ok");
+
+    if (!body.username || !body.avatar) {
+        res.status(400).send("Todos os campos são obrigatórios!");
+    } else {
+        fetch(body.avatar)
+            .then(() => {
+                const newUser = {
+                    username: body.username,
+                    avatar: body.avatar,
+                };
+                users.push(newUser);
+                res.send("Ok");
+            })
+            .catch(() => {
+                res.status(400).send("Insira uma imagem válida!");
+            });
+    }
 });
 
 app.get("/tweets", (req, res) => {

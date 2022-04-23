@@ -12,11 +12,12 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "nodemon": "^2.0.15",
-        "cors": "^2.8.5"
+        "cors": "^2.8.5",
+        "nodemon": "^2.0.15"
     },
     "dependencies": {
         "axios": "^0.26.1",
-        "express": "^4.17.3"
+        "express": "^4.17.3",
+        "node-fetch": "^3.2.3"
     }
 }
