@@ -7,10 +7,8 @@ app.use(express.json());
 app.use(cors());
 app.set("query parser", "simple");
 
-// const users = [];
-
-// const tweets = [];
-
+const users = [],
+    tweets = [];
 
 app.post("/sign-up", (req, res) => {
     const body = req.body;
@@ -36,16 +34,21 @@ app.post("/sign-up", (req, res) => {
 app.get("/tweets", (req, res) => {
     let page = req.query.page;
 
-    const tweetsPage = tweets.filter((tweet, index) => {
-        return (
-            index > tweets.length - page * 11 &&
-            index <= tweets.length - (page - 1) * 11
-        );
-    });
+    if (Number.isInteger(parseInt(page))) {
+        let numberOfTweets = 10;
+        let minIndex = tweets.length - page * (numberOfTweets + 1);
+        let maxIndex = tweets.length - (page - 1) * (numberOfTweets + 1);
 
-    tweetsPage.reverse();
+        const tweetsPage = tweets.filter((tweet, index) => {
+            return index > minIndex && index <= maxIndex;
+        });
 
-    res.send(tweetsPage);
+        tweetsPage.reverse();
+
+        res.send(tweetsPage);
+    } else {
+        res.status(400).send("Informe uma página válida!");
+    }
 });
 
 app.post("/tweets", (req, res) => {
