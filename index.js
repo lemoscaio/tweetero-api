@@ -5,83 +5,12 @@ import fetch from "node-fetch";
 const app = express();
 app.use(express.json());
 app.use(cors());
-// app.set("query parser", "simple")
+app.set("query parser", "simple");
 
 // const users = [];
-const users = [
-    {
-        username: "lemoscaio",
-        avatar: "https://avatars.githubusercontent.com/u/74937642?v=4",
-    },
-];
+
 // const tweets = [];
-const tweets = [
-    {
-        username: "bobesponja",
-        avatar: "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info",
-        tweet: "eu amo o hub",
-    },
-    {
-        username: "bobesponja",
-        avatar: "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info",
-        tweet: "eu amo o hub2",
-    },
-    {
-        username: "lemoscaio",
-        avatar: "https://avatars.githubusercontent.com/u/74937642?v=4",
-        tweet: "eu amo o hub3",
-    },
-    {
-        username: "usuario1",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet4",
-    },
-    {
-        username: "usuario2",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet5",
-    },
-    {
-        username: "usuario3",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet6",
-    },
-    {
-        username: "usuario4",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet7",
-    },
-    {
-        username: "usuario5",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet8",
-    },
-    {
-        username: "usuario6",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet9",
-    },
-    {
-        username: "usuario7",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet10",
-    },
-    {
-        username: "usuario8",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet11",
-    },
-    {
-        username: "usuario9",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet12",
-    },
-    {
-        username: "usuario10",
-        avatar: "https://picsum.photos/200/300",
-        tweet: "tweet13",
-    },
-];
+
 
 app.post("/sign-up", (req, res) => {
     const body = req.body;
@@ -105,11 +34,18 @@ app.post("/sign-up", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
-    const lastTenTweets = tweets.filter((tweet, index) => {
-        return index > tweets.length - 11;
+    let page = req.query.page;
+
+    const tweetsPage = tweets.filter((tweet, index) => {
+        return (
+            index > tweets.length - page * 11 &&
+            index <= tweets.length - (page - 1) * 11
+        );
     });
 
-    res.send(lastTenTweets);
+    tweetsPage.reverse();
+
+    res.send(tweetsPage);
 });
 
 app.post("/tweets", (req, res) => {
@@ -140,5 +76,5 @@ app.get("/tweets/:username", (req, res) => {
 });
 
 app.listen(5000, () => {
-    console.log("Nasceu na porta");
+    console.log("Listening on port 5000");
 });
