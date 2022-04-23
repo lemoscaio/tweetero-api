@@ -95,7 +95,7 @@ app.post("/sign-up", (req, res) => {
                     avatar: body.avatar,
                 };
                 users.push(newUser);
-                res.send("Ok");
+                res.status(201).send("Ok");
             })
             .catch(() => {
                 res.status(400).send("Insira uma imagem válida!");
@@ -124,7 +124,7 @@ app.post("/tweets", (req, res) => {
             tweet: body.tweet,
         };
         tweets.push(newTweet);
-        res.send("Ok");
+        res.status(201).send("Ok");
     }
 });
 
