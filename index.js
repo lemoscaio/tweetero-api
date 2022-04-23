@@ -84,6 +84,14 @@ app.post("/sign-up", (req, res) => {
     res.send("Ok");
 });
 
+app.get("/tweets", (req, res) => {
+    const lastTenTweets = tweets.filter((tweet, index) => {
+        return index < 10;
+    });
+
+    res.send(lastTenTweets);
+});
+
 app.listen(5000, () => {
     console.log("Nasceu na porta");
 });
