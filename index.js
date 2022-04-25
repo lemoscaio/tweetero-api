@@ -15,6 +15,8 @@ app.post("/sign-up", (req, res) => {
 
     if (!body.username || !body.avatar) {
         res.status(400).send("Todos os campos são obrigatórios!");
+    } else if (users.find((user) => user.username === body.username)) {
+        res.status(400).send("Usuário já existe!");
     } else {
         fetch(body.avatar)
             .then(() => {
