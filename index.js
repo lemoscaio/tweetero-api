@@ -43,9 +43,9 @@ app.get("/tweets", (req, res) => {
             return index > minIndex && index <= maxIndex;
         });
 
-        tweetsPage.reverse();
+        const invertedTweets = [...tweetsPage].reverse();
 
-        res.send(tweetsPage);
+        res.send(invertedTweets);
     } else {
         res.status(400).send("Informe uma página válida!");
     }
